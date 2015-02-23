@@ -9,8 +9,8 @@ import (
 )
 
 type ServiceConfig struct {
-	endPoint  url.URL
-	authToken string
+	endPoint url.URL
+	apiKey   string
 }
 
 //Post a file to create a file preview
@@ -23,7 +23,7 @@ func GeneratePreview(fileLocation string, config ServiceConfig) ([]byte, error) 
 	}
 
 	req.Header.Add("Content-Type", "application/json")
-	req.Header.Add("X-API-KEY", config.authToken)
+	req.Header.Add("X-API-KEY", config.apiKey)
 	res, err := client.Do(req)
 	if err != nil {
 		return nil, err

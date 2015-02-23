@@ -2,6 +2,7 @@ package filepreview
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -18,7 +19,7 @@ func TestGeneratingPreview(t *testing.T) {
 
 	c := ServiceConfig{}
 	c.endPoint = *svc
-	c.authToken = "xxxx123456"
+	c.apiKey = "xxxx123456"
 
 	res, err := GeneratePreview(f, c)
 
@@ -29,4 +30,6 @@ func TestGeneratingPreview(t *testing.T) {
 	if res == nil {
 		t.Errorf("%s", "Response should not be nil")
 	}
+
+	log.Printf("%s", res)
 }
