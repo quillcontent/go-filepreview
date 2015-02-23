@@ -18,8 +18,8 @@ func TestGeneratingPreview(t *testing.T) {
 	f := "http://foo.com/file_location"
 
 	c := ServiceConfig{}
-	c.endPoint = *svc
-	c.apiKey = "xxxx123456"
+	c.EndPoint = *svc
+	c.ApiKey = "xxxx123456"
 
 	res, err := GeneratePreview(f, c)
 

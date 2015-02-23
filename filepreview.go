@@ -9,21 +9,21 @@ import (
 )
 
 type ServiceConfig struct {
-	endPoint url.URL
-	apiKey   string
+	EndPoint url.URL
+	ApiKey   string
 }
 
 //Post a file to create a file preview
 func GeneratePreview(fileLocation string, config ServiceConfig) ([]byte, error) {
 	client := &http.Client{}
 	postBody := fmt.Sprintf(`{"url":"%s","sizes":["600>"],"format":"png","metadata":["all"]}`, fileLocation)
-	req, err := http.NewRequest("POST", config.endPoint.String(), bytes.NewReader([]byte(postBody)))
+	req, err := http.NewRequest("POST", config.EndPoint.String(), bytes.NewReader([]byte(postBody)))
 	if err != nil {
 		return nil, err
 	}
 
 	req.Header.Add("Content-Type", "application/json")
-	req.Header.Add("X-API-KEY", config.apiKey)
+	req.Header.Add("X-API-KEY", config.ApiKey)
 	res, err := client.Do(req)
 	if err != nil {
 		return nil, err

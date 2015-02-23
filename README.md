@@ -13,9 +13,9 @@ go get github.com/quillcontent/go-filepreview
 svc, err := url.Parse("https://api.filepreviews.io/v1/")
 f := "http://linktofiletopreview..."
 
-c := ServiceConfig{}
-c.endPoint = *svc
-c.apiKey = "yourkey"
+c := filepreview.ServiceConfig{}
+c.EndPoint = *svc
+c.ApiKey = "yourkey"
 
 res, err := GeneratePreview(f, c)
 ```
