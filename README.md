@@ -17,5 +17,5 @@ c := filepreview.ServiceConfig{}
 c.EndPoint = *svc
 c.ApiKey = "yourkey"
 
-res, err := GeneratePreview(f, c)
+res, err := filepreview.GeneratePreview(f, c)
 ```
