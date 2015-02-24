@@ -2,6 +2,7 @@ package filepreview
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"net/http/httptest"
@@ -11,7 +12,11 @@ import (
 
 func TestGeneratingPreview(t *testing.T) {
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintln(w, `"job_id": "5f30e1c1-3fcf-4150-a5d6-25f19b4024f6", "metadata_url": "https://s3.amazonaws.com/demo.filepreviews.io/xxx/metadata.json", "preview_url": "https://s3.amazonaws.com/demo.filepreviews.io/xxx/Test Word document_320>_1.png"}`)
+		body, _ := ioutil.ReadAll(r.Body)
+		log.Printf("%s", body)
+		fmt.Fprintln(w, `"job_id": "5f30e1c1-3fcf-4150-a5d6-25f19b4024f6", 
+      "metadata_url": "https://s3.amazonaws.com/demo.filepreviews.io/xxx/metadata.json", 
+      "preview_url": "https://s3.amazonaws.com/demo.filepreviews.io/xxx/Test Word document_320>_1.png"}`)
 	}))
 
 	svc, err := url.Parse(ts.URL)
@@ -19,6 +24,8 @@ func TestGeneratingPreview(t *testing.T) {
 
 	c := ServiceConfig{}
 	c.EndPoint = *svc
+	c.Width = 600
+	c.Height = 800
 	c.ApiKey = "xxxx123456"
 
 	res, err := GeneratePreview(f, c)

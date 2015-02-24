@@ -11,12 +11,14 @@ import (
 type ServiceConfig struct {
 	EndPoint url.URL
 	ApiKey   string
+	Width    int
+	Height   int
 }
 
 //Post a file to create a file preview
 func GeneratePreview(fileLocation string, config ServiceConfig) ([]byte, error) {
 	client := &http.Client{}
-	postBody := fmt.Sprintf(`{"url":"%s","sizes":["600>"],"format":"png","metadata":["all"]}`, fileLocation)
+	postBody := fmt.Sprintf(`{"url":"%s","pages":"all","sizes":["%vx%v>"],"format":"png","metadata":["all"]}`, fileLocation, config.Width, config.Height)
 	req, err := http.NewRequest("POST", config.EndPoint.String(), bytes.NewReader([]byte(postBody)))
 	if err != nil {
 		return nil, err
